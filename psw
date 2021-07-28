@@ -1,0 +1,61 @@
+#!/usr/bin/env python3
+
+import requests
+from bs4 import BeautifulSoup
+v = '\033[1;32m'; ve = '\033[1;31m'; a = '\033[1;34m'
+def banner():
+
+    print(f'''
+{v}
+    ███████╗██╗  ██╗ ██████╗ ██╗    ██╗    ██████╗ ███████╗██╗    ██╗
+    ██╔════╝██║  ██║██╔═══██╗██║    ██║    ██╔══██╗██╔════╝██║    ██║
+    ███████╗███████║██║   ██║██║ █╗ ██║    ██████╔╝███████╗██║ █╗ ██║
+    ╚════██║██╔══██║██║   ██║██║███╗██║    ██╔═══╝ ╚════██║██║███╗██║
+    ███████║██║  ██║╚██████╔╝╚███╔███╔╝    ██║     ███████║╚███╔███╔╝
+    ╚══════╝╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝     ╚═╝     ╚══════╝ ╚══╝╚══╝ 
+          {a}Discord: {v}On1on_#0506                      {a}Created by {v}On1on
+
+
+                       {ve}[{a}1{ve}] - Search password
+
+                       {ve}[{a}2{ve}] - Search emails\n\n''')
+    try:
+        oo = int(input(f'{ve} --> '))
+    
+        if oo == 1:
+            ass = str(input(f'{ve}Password: '))
+            data = {"password": ass, 'submitform': "pw"}
+            try:
+                r = session.post('http://pwndb2am4tzkvold.onion/', data)
+            except:
+                print(f'{ve}Erro na proxy do tor: {v}sudo service tor start')
+            soup = BeautifulSoup(r.text, 'html.parser')
+            soup = soup.find_all('pre')
+            print(f'{a}', soup)
+
+        elif oo == 2:
+            print(f"{ve} Digite apenas o nome do email  ex: {a}lucas123")
+            ass = str(input(f'{ve} Email: --> {v}'))
+            print(f"{ve} Digite apenas o dominio  ex: {v}gmail.com")
+            dom = str(input(f'{ve} Dominio: --> {v}'))
+            data = {"luser": ass, "domain": dom, "luseropr": "0", "domainopr": "0", "submitform": "em"}
+            try:
+                r = session.post('http://pwndb2am4tzkvold.onion/', data)
+            except:
+                print(f'{ve}Erro na proxy do tor: {v}sudo service tor start')
+            soup = BeautifulSoup(r.text, 'html.parser')
+            soup = soup.find_all('pre')
+            print(f'{a}', soup)
+    except:
+        print(f'{ve}Comando invalido!\n\nsaindo...')
+        exit()
+
+session = requests.session()
+session.proxies = {}
+session.proxies['http'] = 'socks5h://localhost:9050'
+session.proxies['https'] = 'socks5h://localhost:9050'
+
+while True:
+    banner()
+    print(f'\n\n\n    {ve}[{v}PRESS ENTER TO RETURN{ve}]\n\n\n')
+    input('')
